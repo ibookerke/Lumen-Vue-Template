@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" @click="" class="btn btn-secondary">Save</button>
+                                <button type="submit" @click="submit" class="btn btn-secondary">Save</button>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-
+import auth from "../auth"
 export default {
     data(){
         return {
@@ -58,7 +58,9 @@ export default {
         }
     },
     methods:{
-
+        submit() {
+            auth.Register(this.cred)
+        }
     }
 }
 </script>

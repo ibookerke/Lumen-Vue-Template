@@ -18,9 +18,9 @@ export default ({
             console.log(response.data)
         })
     },
-    Register: async (cred, redirect) => {
+    Register: async (cred) => {
         baseApi().post(REG_URL, cred).then( (response) => {
-
+            console.log(response.data)
         })
     },
     Logout: async (cred, redirect) => {
