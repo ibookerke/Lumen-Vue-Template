@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let baseApi = axios.create({
-    baseURL : 'http://lumen.pro/api'
+    baseURL : 'http://127.0.0.1:8000/api'
 });
 
 const Api = function(){

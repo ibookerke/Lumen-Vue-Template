@@ -1,5 +1,4 @@
 import baseApi from '../baseApi'
-import router from '../router'
 
 const LOGIN_URL = '/login';
 const LOGOUT_URL = '/logout';
