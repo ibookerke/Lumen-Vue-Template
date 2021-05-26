@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div style="width: 400px; margin:auto; margin-top:1em;">
+        <div style="margin:auto; margin-top:1em;">
             <div style="width:100%; padding: .5em; border-bottom: 1px solid #dedede; display:flex;">
                 <ul>
                     <li><router-link to="/Home">Home</router-link></li>
@@ -8,14 +8,14 @@
                     <li><router-link to="/Tab2">Tab 2</router-link></li>
                     <li><router-link to="/Tab3">Tab 3</router-link></li>
                 </ul>
-                <ul style="margin-left:auto;">
+                <ul v-if="!isAuth" style="margin-left:auto;">
                     <li><router-link to="/login" class="btn-custom btn-custom-primary">Login</router-link></li>
                     <li><router-link to="/register" class="btn-custom">Register</router-link></li>
                 </ul>
-<!--                <ul v-else style="margin-left:auto;">-->
-<!--                    <li>Role {{ user.role + " - " + user.name }}</li>-->
-<!--                    <li><a href="javascript:void(0)" @click="logout">LogOut</a> </li>-->
-<!--                </ul>-->
+                <ul v-else style="margin-left:auto;">
+                    <li >Role {{user.role + "-" + user.name}}</li>
+                    <li><a href="javascript:void(0)" @click="logout">Logout</a></li>
+                </ul>
             </div>
             <router-view/>
         </div>
@@ -23,9 +23,22 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import auth from "./auth";
 
 export default {
     name: 'App',
+    computed: {
+        ...mapGetters({
+            isAuth: 'GET_AUTH',
+            user: "GET_AUTH_USER"
+        })
+    },
+    methods: {
+         logout() {
+             auth.Logout()
+         }
+    }
 }
 </script>
 

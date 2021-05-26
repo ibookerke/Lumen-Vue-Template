@@ -1,6 +1,6 @@
 const auth = ({
     state: {
-        User:{
+        user:{
             'id' : '',
             'name': '',
             'email': '',
@@ -36,9 +36,9 @@ const auth = ({
         }
     },
     getters : {
-        SET_AUTH_USER: state => state.user,
-        SET_TOKEN: state => state.token,
-        SET_AUTH: state => state.authenticated,
+        GET_AUTH_USER: state => state.user,
+        GET_TOKEN: state => state.token,
+        GET_AUTH: state => state.authenticated,
     }
 })
 
