@@ -15,36 +15,60 @@ export default ({
         token: ''
     },
     Login: async (cred, redirect) => {
-        baseApi().post(LOGIN_URL, cred).then( (response) => {
-            if (response.data.status === "success"){
-                store.dispatch('SET_AUTH_USER', response.data.user.user)
-                store.dispatch('SET_TOKEN', response.data.user.token)
-                store.dispatch('SET_AUTH', true)
-                localStorage.setItem('token', response.data.user.token.value)
-                router.push(redirect)
-            }
-            console.log(response)
-        })
+        try{
+            baseApi().post(LOGIN_URL, cred).then( (response) => {
+                if (response.data.status === 200){
+                    store.dispatch('SET_AUTH_USER', response.data.user.user)
+                    store.dispatch('SET_TOKEN', response.data.user.token)
+                    store.dispatch('SET_AUTH', true)
+                    localStorage.setItem('token', response.data.user.token.value)
+                    router.push(redirect)
+                }
+                return response.data
+            })
+        }
+        catch(err) { return { "status" : "failed", "message" : err.message }}
     },
     Register: async (cred) => {
-        baseApi().post(REG_URL, cred).then( (response) => {
-            console.log(response.data)
-        })
+        try{
+            baseApi().post(REG_URL, cred).then( (response) => {
+                return response.data
+            })
+        }
+        catch(err) { return { "status" : "failed", "message" : err.message }}
     },
     async Logout(){
-        baseApi().post(LOGOUT_URL).then( (response) => {
-            if(response.data.status === "success"){
-                this.storageCleaner()
-                router.push('/')
-            }
-        })
+        try{
+            baseApi().post(LOGOUT_URL).then( (response) => {
+                if(response.data.status === 200){
+                    this.storageCleaner()
+                    if(router.history.current.path !== "/home"){
+                        router.push("/home")
+                    }
+                }
+            })
+        }
+        catch(err) { return { "status" : "failed", "message" : err.message }}
+
     },
+    async authCheck() {
+        try{
+            await baseApi().get('/user').then( (response) => {
+                if(response.data.status === 200){
+                    store.dispatch('SET_AUTH_USER', response.data.user.user)
+                    store.dispatch('SET_TOKEN', response.data.user.token)
+                    store.dispatch('SET_AUTH', true)
+                    localStorage.setItem('token', response.data.user.token.value)
+                }
+            })
+        }
+        catch(err) { return { "status" : "failed", "message" : err.message }}
+    },
+
     storageCleaner(){
         store.dispatch("SET_AUTH_USER", this.userDefault)
         store.dispatch("SET_TOKEN", '')
         store.dispatch("SET_AUTH", false)
         localStorage.removeItem('token')
     }
-
-
 });

@@ -1,5 +1,5 @@
 <template>
-    <h1>Tab 2</h1>
+    <h1>Some secret account data</h1>
 </template>
 
 <script>

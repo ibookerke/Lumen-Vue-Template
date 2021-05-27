@@ -3,10 +3,10 @@
         <div style="margin:auto; margin-top:1em;">
             <div style="width:100%; padding: .5em; border-bottom: 1px solid #dedede; display:flex;">
                 <ul>
-                    <li><router-link to="/Home">Home</router-link></li>
-                    <li><router-link to="/Tab1">Tab 1</router-link></li>
-                    <li><router-link to="/Tab2">Tab 2</router-link></li>
-                    <li><router-link to="/Tab3">Tab 3</router-link></li>
+                    <li><router-link :to="{name: 'Home'}">Home</router-link></li>
+                    <li><router-link :to="{name: 'Tab1'}">Tab 1</router-link></li>
+                    <li><router-link :to="{name: 'Tab2'}">Tab 2</router-link></li>
+                    <li><router-link :to="{name: 'Tab3'}">Tab 3</router-link></li>
                 </ul>
                 <ul v-if="!isAuth" style="margin-left:auto;">
                     <li><router-link to="/login" class="btn-custom btn-custom-primary">Login</router-link></li>
@@ -17,7 +17,8 @@
                     <li><a href="javascript:void(0)" @click="logout">Logout</a></li>
                 </ul>
             </div>
-            <router-view/>
+            <h4 v-if="$root.isLoading">Loading...</h4>
+            <router-view v-else/>
         </div>
     </div>
 </template>
